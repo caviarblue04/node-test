@@ -3,19 +3,25 @@ const router = express.Router();
 const Post = require('../models/Post');
 
 router.get('/', async (req, res) => {
+    const post = new Post({
+        Status: req.body.Status,
+        SlotNo: req.body.SlotNo,
+        TradeNo: req.body.TradeNo
+    });
     try{
-        const posts = await Post.find();
-        res.json(posts);
+    const savedPost = await post.save();
+    res.json(savedPost);
     }catch(err){
-        res.json({message:err});
+        res.json({message: err});
     }
-
 });
+
 
 router.post('/', async (req, res) => {
     const post = new Post({
-        title: req.body.title,
-        description: req.body.description
+        Status: req.body.Status,
+        SlotNo: req.body.SlotNo,
+        TradeNo: req.body.TradeNo
     });
     try{
     const savedPost = await post.save();
