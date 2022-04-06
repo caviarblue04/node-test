@@ -11,11 +11,13 @@ const postsRoutes = require('./routes/posts');
 app.use( bodyparser.json());
 app.use( '/posts', postsRoutes);
 
-
-app.listen(3000);
+const port = process.env.port || 3000; 
+app.listen(port, () => {
+    console.log('Port connected')
+});
 
 app.get('/', (req, res) => {
-    res.send('~HOME~');
+    res.send('Testing Homepage');
 });
 
 
