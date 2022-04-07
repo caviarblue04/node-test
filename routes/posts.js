@@ -1,6 +1,12 @@
 const express = require('express');
+const { find } = require('../models/post');
 const router = express.Router();
 const Post = require('../models/post');
+
+
+router.get('/', (req,res) => {
+    res.send('Importing JSON file')
+})
 
 
 router.post('/', async (req, res) => {
@@ -16,5 +22,12 @@ router.post('/', async (req, res) => {
         res.json({message: err});
     }
 });
+
+router.get('/all-data', (req, res) => {
+    Post.find()
+    .then((result) => {
+        res.send(result);
+    })
+})
 
 module.exports = router; 

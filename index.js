@@ -10,6 +10,7 @@ const postsRoutes = require('./routes/posts');
 //Middleware
 app.use( bodyparser.json());
 app.use( '/posts', postsRoutes);
+
 app.listen(port, () => {
     console.log(`Port connected ${port}`)
 });
