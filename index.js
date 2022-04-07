@@ -1,17 +1,18 @@
 const express = require('express');
 const app = express();
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
+const bodyparser = require('body-parser');
+const port = process.env.port || 3000; 
 
+//Import Routes
+const postsRoutes = require('./routes/posts');
 
-const port = process.env.port || 8080; 
+//Middleware
+app.use( bodyparser.json());
+app.use( '/posts', postsRoutes);
 app.listen(port, () => {
-    console.log('Port connected')
+    console.log(`Port connected ${port}`)
 });
-
-app.get('/', (req, res) => {
-    res.send('Testing Homepage');
-});
-
 //Connect db
 mongoose.connect(
     "mongodb+srv://dbAdmin:Abc123@cluster0.1um74.mongodb.net/Rest?retryWrites=true&w=majority", 
@@ -27,50 +28,6 @@ db.once("open", function () {
   console.log("Connected successfully");
 });
 
-app.get('/', async (req, res) => {
-    const post = new PostSchema({
-        Status: res.body.Status,
-        SlotNo: res.body.SlotNo,
-        TradeNo: res.body.TradeNo
-    });
-    try{
-    const savedPost = await post.save();
-    res.json(savedPost);
-    }catch(err){
-        res.json({message: err});
-    }
+app.get('/', (req, res) => {
+    res.send('Testing Homepage');
 });
-
-
-app.post('/', async (req, res) => {
-    const post = new PostSchema({
-        Status: req.body.Status,
-        SlotNo: req.body.SlotNo,
-        TradeNo: req.body.TradeNo
-    });
-    try{
-    const savedPost = await post.save();
-    res.json(savedPost);
-    }catch(err){
-        res.json({message: err});
-    }
-});
-
-
-const PostSchema = mongoose.Schema({
-    Status: {
-        type: Number,
-        require: true
-    },
-    SlotNo: {
-        type: String,
-        require: true
-    },
-    TradeNo: {
-        type: String,
-        require: true
-    },
-
-});
-
-module.exports = mongoose.model('Posts', PostSchema);

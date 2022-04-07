@@ -1,8 +1,9 @@
 const mongoose = require ('mongoose');
+const Schema = mongoose.Schema;
 
-const PostSchema = mongoose.Schema({
+const postSchema = new Schema ({
     Status: {
-        type: Int,
+        type: String,
         require: true
     },
     SlotNo: {
@@ -12,8 +13,8 @@ const PostSchema = mongoose.Schema({
     TradeNo: {
         type: String,
         require: true
-    },
+    }
+} , {timestamps: true});
 
-});
-
-module.exports = mongoose.model('Posts', PostSchema);
+const Post = mongoose.model('Posts', postSchema)
+module.exports = Post;
