@@ -28,7 +28,7 @@ db.once("open", function () {
 });
 
 app.get('/', async (req, res) => {
-    const post = new Post({
+    const post = new PostSchema({
         Status: res.body.Status,
         SlotNo: res.body.SlotNo,
         TradeNo: res.body.TradeNo
@@ -43,7 +43,7 @@ app.get('/', async (req, res) => {
 
 
 app.post('/', async (req, res) => {
-    const post = new Post({
+    const post = new PostSchema({
         Status: req.body.Status,
         SlotNo: req.body.SlotNo,
         TradeNo: req.body.TradeNo
