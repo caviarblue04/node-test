@@ -16,7 +16,7 @@ app.listen(port, () => {
 });
 //Connect db
 mongoose.connect(
-    "mongodb+srv://dbAdmin:Abc123@cluster0.1um74.mongodb.net/Rest?retryWrites=true&w=majority", 
+    process.env.DB_connection, 
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
