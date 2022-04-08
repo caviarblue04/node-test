@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
         TradeNo: req.body.TradeNo,
         SlotNo: req.body.SlotNo,
         KeyNum: req.body.KeyNum,
-        Status: req.body.Status,
+        Status: "0",
         Quantity: req.body.Quantity,
         Stock: req.body.Stock,
         Capacity: req.body.Capacity,
