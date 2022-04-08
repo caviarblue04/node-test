@@ -6,7 +6,7 @@ const Post = require('../models/post');
 
 router.post('/', async (req, res) => {
     const post = new Post({
-        FunCode: req.body.FunCode,
+        FunCode: "1000",
         MachineID: req.body.MachineID,
         TradeNo: req.body.TradeNo,
         SlotNo: req.body.SlotNo,

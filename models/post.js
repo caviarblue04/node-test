@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema ({
     FunCode: {
         type: String,
-        require: true
+        default: "1000"
     },
     MachineID: {
         type: String,
