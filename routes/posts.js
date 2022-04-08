@@ -23,11 +23,22 @@ router.post('/', async (req, res) => {
     });
     try{
     const savedPost = await post.save();
-    res.json(savedPost),
-    res.send(savedPost);
+    //res.json(savedPost);
+    res.send(JSON.stringify({
+        Status: "0",
+        SlotNo: req.body.SlotNo,
+        TradeNo: req.body.TradeNo,
+        Err: ""
+    }))
     }catch(err){
-        res.json({message: err});
+        res.send(JSON.stringify({
+            Status: "1",
+            SlotNo: req.body.SlotNo,
+            TradeNo: req.body.TradeNo,
+            Err: err
+        }))
     }
+
 });
 
 router.get('/', async (req, res) => {
