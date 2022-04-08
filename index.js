@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 const port = process.env.port || 3000; 
+require ('dotenv/config');
 
 //Import Routes
 const postsRoutes = require('./routes/posts');
