@@ -9,12 +9,15 @@ require ('dotenv/config');
 const postsRoutes = require('./routes/posts');
 
 //Middleware
-app.use( bodyparser.json());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true}))
 app.use( '/posts', postsRoutes);
+app.use(express.json);
 
 app.listen(port, () => {
     console.log(`Port connected ${port}`)
 });
+
 //Connect db
 mongoose.connect(
     process.env.DB_connection, 

@@ -1,55 +1,46 @@
+const { request } = require('express');
 const express = require('express');
-const { find } = require('../models/post');
+const { json } = require('express/lib/response');
 const router = express.Router();
 const Post = require('../models/post');
 
-
 router.post('/', async (req, res) => {
-    const post = new Post({
+    //console.log(req.headers.machineid);
+    var post = new Post({
         FunCode: "1000",
-        MachineID: req.body.MachineID,
-        TradeNo: req.body.TradeNo,
-        SlotNo: req.body.SlotNo,
-        KeyNum: req.body.KeyNum,
+        MachineID: req.headers.machineid,
+        TradeNo: req.headers.tradeno,
+        SlotNo: req.headers.slotno,
+        KeyNum: req.headers.keynum,
         Status: "0",
-        Quantity: req.body.Quantity,
-        Stock: req.body.Stock,
-        Capacity: req.body.Capacity,
-        ProductID: req.body.ProductID,
-        Price: req.body.Price,
-        Type: req.body.Price,
-        Introduction: req.body.Introduction,
-        Name: req.body.Name
+        Quantity: req.headers.quantity,
+        Stock: req.headers.stock,
+        Capacity: req.headers.capacity,
+        ProductID: req.headers.productid,
+        Price: req.headers.price,
+        Type: req.headers.type,
+        Introduction: req.headers.introduction,
+        Name: req.headers.name
     });
     try{
-    const savedPost = await post.save();
-    //res.json(savedPost);
-    res.send(JSON.stringify({
+    post.save();
+    res.send(({
         Status: "0",
         SlotNo: req.body.SlotNo,
-        TradeNo: req.body.TradeNo,
-        Err: ""
-    }))
+        TradeNo: req.body.TradeNo}))
     }catch(err){
-        res.send(JSON.stringify({
+        res.send(({
             Status: "1",
             SlotNo: req.body.SlotNo,
             TradeNo: req.body.TradeNo,
-            Err: err
-        }))
+            Err: `${err}`
+        }))  
     }
-
 });
 
 router.get('/', async (req, res) => {
-    Post.findOne({
-        Status: req.body.Status,
-        SlotNo: req.body.SlotNo,
-        TradeNo: req.body.TradeNo
-    })
-    .then((result) => {
-        res.send(result);
-    })
+    const MachineID1 = req.headers.MachineID;
+    res.send(`${MachineID1}`)
 })
 
 
