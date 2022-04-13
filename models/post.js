@@ -61,5 +61,5 @@ const postSchema = new Schema ({
 
 } , {timestamps: true});
 
-const Post = mongoose.model('Dev', postSchema)
+const Post = mongoose.model('Test1000', postSchema)
 module.exports = Post;

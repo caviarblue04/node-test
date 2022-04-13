@@ -5,34 +5,34 @@ const router = express.Router();
 const Post = require('../models/post');
 
 router.post('/', async (req, res) => {
-    //console.log(req.headers.machineid);
+    //console.log(req.query.MachineID);
     var post = new Post({
         FunCode: "1000",
-        MachineID: req.headers.machineid,
-        TradeNo: req.headers.tradeno,
-        SlotNo: req.headers.slotno,
-        KeyNum: req.headers.keynum,
+        MachineID: req.query.MachineID,
+        TradeNo: req.query.TradeNo,
+        SlotNo: req.query.SlotNo,
+        KeyNum: req.query.KeyNum,
         Status: "0",
-        Quantity: req.headers.quantity,
-        Stock: req.headers.stock,
-        Capacity: req.headers.capacity,
-        ProductID: req.headers.productid,
-        Price: req.headers.price,
-        Type: req.headers.type,
-        Introduction: req.headers.introduction,
-        Name: req.headers.name
+        Quantity: req.query.Quantity,
+        Stock: req.query.Stock,
+        Capacity: req.query.Capacity,
+        ProductID: req.query.ProductID,
+        Price: req.query.Price,
+        Type: req.query.Type,
+        Introduction: req.query.Introduction,
+        Name: req.query.Name
     });
     try{
     post.save();
     res.send(({
         Status: "0",
-        SlotNo: req.body.SlotNo,
-        TradeNo: req.body.TradeNo}))
+        SlotNo: req.query.SlotNo,
+        TradeNo: req.query.TradeNo}))
     }catch(err){
         res.send(({
             Status: "1",
-            SlotNo: req.body.SlotNo,
-            TradeNo: req.body.TradeNo,
+            SlotNo: req.query.SlotNo,
+            TradeNo: req.query.TradeNo,
             Err: `${err}`
         }))  
     }
