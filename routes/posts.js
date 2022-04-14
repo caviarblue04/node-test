@@ -6,27 +6,25 @@ const Post = require('../models/post');
 
 router.post('/', async (req, res) => {
     //console.log(req.query.MachineID);
-    var funcode = req.query.FunCode;
-    var machineid = req.query.MachineID;
-    var tradeno = req.query.TradeNo;
-    var slotno = req.query.SlotNo;
-    var keynum = req.query.KeyNum;
+    var funcode = req.body.FunCode;
+    var machineid = req.body.MachineID;
+    var tradeno = req.body.TradeNo;
+    var slotno = req.body.SlotNo;
+    var keynum = req.body.KeyNum;
     var status = "0";
-    var quantity = req.query.Quantity;
-    var stock = req.query.Stock;
-    var capacity = req.query.Capacity;
-    var productid = req.query.ProductID;
-    var price = req.query.Price;
-    var type = req.query.Type;
-    var introduction = req.query.Introduction;
-    var name = req.query.Name
+    var quantity = req.body.Quantity;
+    var stock = req.body.Stock;
+    var capacity = req.body.Capacity;
+    var productid = req.body.ProductID;
+    var price = req.body.Price;
+    var type = req.body.Type;
+    var introduction = req.body.Introduction;
+    var name = req.body.Name
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name
     });
     try{
-    console.log(req.query);
-    console.log(req.body);
-    console.log(req.params);
+    console.log(JSON.stringify(post))
     res.send(({
         Status: "0",
         SlotNo: slotno,
