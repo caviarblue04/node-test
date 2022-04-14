@@ -6,41 +6,41 @@ const Post = require('../models/post');
 
 router.post('/', async (req, res) => {
     //console.log(req.query.MachineID);
-    var post = new Post({
-        FunCode: "1000",
-        MachineID: req.query.MachineID,
-        TradeNo: req.query.TradeNo,
-        SlotNo: req.query.SlotNo,
-        KeyNum: req.query.KeyNum,
-        Status: "0",
-        Quantity: req.query.Quantity,
-        Stock: req.query.Stock,
-        Capacity: req.query.Capacity,
-        ProductID: req.query.ProductID,
-        Price: req.query.Price,
-        Type: req.query.Type,
-        Introduction: req.query.Introduction,
-        Name: req.query.Name
+    var funcode = req.query.FunCode;
+    var machineid = req.query.MachineID;
+    var tradeno = req.query.TradeNo;
+    var slotno = req.query.SlotNo;
+    var keynum = req.query.KeyNum;
+    var status = "0";
+    var quantity = req.query.Quantity;
+    var stock = req.query.Stock;
+    var capacity = req.query.Capacity;
+    var productid = req.query.ProductID;
+    var price = req.query.Price;
+    var type = req.query.Type;
+    var introduction = req.query.Introduction;
+    var name = req.query.Name
+    var post = new Array({
+        funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name
     });
     try{
-    post.save();
+    console.log(post)
     res.send(({
         Status: "0",
-        SlotNo: req.query.SlotNo,
-        TradeNo: req.query.TradeNo}))
+        SlotNo: slotno,
+        TradeNo: tradeno}))
     }catch(err){
         res.send(({
             Status: "1",
-            SlotNo: req.query.SlotNo,
-            TradeNo: req.query.TradeNo,
+            SlotNo: slotno,
+            TradeNo: tradeno,
             Err: `${err}`
         }))  
     }
 });
 
 router.get('/', async (req, res) => {
-    const MachineID1 = req.headers.MachineID;
-    res.send(`${MachineID1}`)
+    res.send('Post Page')
 })
 
 
