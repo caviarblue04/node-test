@@ -5,7 +5,6 @@ const router = express.Router();
 const Post = require('../models/post');
 
 router.post('/', async (req, res) => {
-    console.log(req);
     //console.log(req.query.MachineID);
     var post = new Post({
         FunCode: "1000",
