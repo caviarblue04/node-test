@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name
     });
     try{
-    console.log(post)
+    console.log(JSON.stringify(post))
     res.send(({
         Status: "0",
         SlotNo: slotno,
