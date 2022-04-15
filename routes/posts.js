@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
-    var MsgType = "1";
+    var MsgType = "0";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
