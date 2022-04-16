@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
-    var MsgType = "0";
+    var MsgType = "1";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
@@ -65,12 +65,12 @@ router.post('/', async (req, res) => {
             res.send(({
                 Status: "0",
                 MsgType: "1",
-                SlotNo: "69",
+                SlotNo: "19",
                 TradeNo: tradeno,
                 Capacity: capacity,
                 Quanitity: quantity,
                 ProductID: productid,
-                Name: name,
+                Name: "Cat",
                 Price: price,
                 Type: type,
                 Introduction: "introduction of product",
