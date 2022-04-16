@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     //console.log(req.query.MachineID);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
-    var tradeno = req.body.TradeNo;
+    var tradeno = "00000000001";
     var slotno = req.body.SlotNo;
     var keynum = req.body.KeyNum;
     var status = "0";
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
-    var MsgType = "1";
+    var MsgType = "0";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
@@ -82,11 +82,21 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '5000'){
-
+        res.send(({
+            Status: "0",
+            SlotNo: slotno,
+            TradeNo: tradeno,
+            Err:'Success'
+        }))
     }
 
     else if (funcode === '5001'){
-
+        res.send(({
+            Status: "0",
+            SlotNo: slotno,
+            TradeNo: tradeno,
+            Err:'Success'
+        }))
     }
 
     }catch(err){
