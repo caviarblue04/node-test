@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
-    var MsgType = "0";
+    var MsgType = "1";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
@@ -66,16 +66,16 @@ router.post('/', async (req, res) => {
                 Status: "0",
                 MsgType: "1",
                 SlotNo: "19",
-                TradeNo: tradeno,
-                Capacity: capacity,
-                Quanitity: quantity,
-                ProductID: productid,
+                TradeNo: "00000000001",
+                Capacity: "20",
+                Quanitity: "20",
+                ProductID: "15142",
                 Name: "Cat",
-                Price: price,
-                Type: type,
+                Price: "25",
+                Type: "animal",
                 Introduction: "introduction of product",
-                ImageUrl: "https://i.imgur.com/PxZqLUR.jpeg",
-                ImageDetailUrl: "Image Details",
+                ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png",
+                ImageDetailUrl: "Cat",
                 Err: "Success"
             })) 
         }
