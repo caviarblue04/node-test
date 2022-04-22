@@ -44,8 +44,8 @@ router.post('/', async (req, res) => {
     else if (funcode === '2000'){
         res.send(({
             Status: "0",
-            SlotNo: "16",
-            ProductID: "16",
+            SlotNo: "5",
+            ProductID: "5",
             TradeNo: tradeno,
             Err:'Success'
         }))
@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '5000'){
-        //No Info
+        //No 
         res.send(({
             Status: "0",
             SlotNo: slotno,
