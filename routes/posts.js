@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     var type = req.body.Type;
     var introduction = req.body.Introduction;
     var name = req.body.Name
-    var sessioncode = "5689";
+    var sessioncode = "1214";
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     else if (funcode === '2000'){
         res.send(({
             Status: "0",
-            SlotNo: "26",
+            SlotNo: "16",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
