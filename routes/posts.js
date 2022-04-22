@@ -44,8 +44,8 @@ router.post('/', async (req, res) => {
     else if (funcode === '2000'){
         res.send(({
             Status: "0",
-            SlotNo: "5",
-            ProductID: "5",
+            SlotNo: "16",
+            ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
         }))
