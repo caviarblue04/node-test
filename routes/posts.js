@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
         res.send(({
             Status: "0",
             SlotNo: "16",
-            ProductID: productid,
+            ProductID: "16",
             TradeNo: tradeno,
             Err:'Success'
         }))
