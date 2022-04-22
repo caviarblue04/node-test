@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     var type = req.body.Type;
     var introduction = req.body.Introduction;
     var name = req.body.Name
-    var sessioncode = req.body.SessionCode;
+    var sessioncode = "5689";
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
@@ -32,6 +32,7 @@ router.post('/', async (req, res) => {
     console.log(JSON.stringify(post))
 
     if (funcode === '1000'){
+        //Check status of the machine, all var provided in the machine
         res.send({
             Status: "0",
             SlotNo: slotno,
@@ -51,7 +52,9 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === "4000"){
+        //Funcode 4000 is ping receive from the machine to change/not change product
         if(MsgType === '0'){
+            //MsgType 0 = No changes made to the machine
             res.send(({
                 Status: "0",
                 MsgType: "0",
@@ -62,6 +65,8 @@ router.post('/', async (req, res) => {
             }))
         }
         else if(MsgType === '1'){
+            //MsgType 1 = change product setting in the machine
+            //All var should be filled out, else the machine wont make it.
             res.send(({
                 Status: "0",
                 MsgType: "1",
@@ -74,7 +79,8 @@ router.post('/', async (req, res) => {
                 Price: "25",
                 Type: "animal",
                 Introduction: "introduction of product",
-                ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png",
+                //Picture link should be in PNG format else the machine wont receive
+                ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png", 
                 ImageDetailUrl: "Cat",
                 Err: "Success"
             })) 
@@ -82,6 +88,7 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '5000'){
+        //No Info
         res.send(({
             Status: "0",
             SlotNo: slotno,
@@ -91,6 +98,7 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '5001'){
+        //Funcode 5001 to confirm the changes in the machine (?)
         res.send(({
             Status: "0",
             SlotNo: slotno,
