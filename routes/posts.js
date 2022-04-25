@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     var type = req.body.Type;
     var introduction = req.body.Introduction;
     var name = req.body.Name
-    var sessioncode = req.body.sessioncode;
+    var sessioncode = req.body.SessionCode;
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
@@ -42,19 +42,19 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode = "1210"){        
+        if (sessioncode = "5555"){        
                 res.send(({
                 Status: "0",
-                SlotNo: "20",
+                SlotNo: "5",
                 ProductID: productid,
                 TradeNo: tradeno,
                 Err:'Success'
                 }))
         }
-        else if (sessioncode = "1211"){        
+        else if (sessioncode = "7777"){        
             res.send(({
             Status: "0",
-            SlotNo: "25",
+            SlotNo: "17",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
