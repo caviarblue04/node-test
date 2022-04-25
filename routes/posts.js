@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     //console.log(req.query.MachineID);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
-    var tradeno = "00000000001";
+    var tradeno = req.body.TradeNo;
     var slotno = req.body.SlotNo;
     var keynum = req.body.KeyNum;
     var status = "0";
@@ -42,19 +42,19 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode = "1214"){        
-            res.send(({
-            Status: "0",
-            SlotNo: "17",
-            ProductID: productid,
-            TradeNo: tradeno,
-            Err:'Success'
-            }))
+        if (sessioncode = "1212"){        
+                res.send(({
+                Status: "0",
+                SlotNo: "12",
+                ProductID: productid,
+                TradeNo: tradeno,
+                Err:'Success'
+                }))
         }
-        else if (sessioncode = "1215"){        
+        else if (sessioncode = "1213"){        
             res.send(({
             Status: "0",
-            SlotNo: "18",
+            SlotNo: "13",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
