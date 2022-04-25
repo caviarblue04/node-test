@@ -42,19 +42,19 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode = "5555"){        
+        if (sessioncode = "4567"){        
                 res.send(({
                 Status: "0",
-                SlotNo: "5",
+                SlotNo: "20",
                 ProductID: productid,
                 TradeNo: tradeno,
                 Err:'Success'
                 }))
         }
-        else if (sessioncode = "7777"){        
+        else if (sessioncode = "5678"){        
             res.send(({
             Status: "0",
-            SlotNo: "17",
+            SlotNo: "30",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
