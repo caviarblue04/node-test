@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         if (sessioncode === '1111'){        
                 res.send(({
                 Status: "0",
-                SlotNo: "10",
+                SlotNo: "13",
                 ProductID: productid,
                 TradeNo: tradeno,
                 Err:'Success'
@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
         else if (sessioncode === '2222'){        
             res.send(({
             Status: "0",
-            SlotNo: "15",
+            SlotNo: "23",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
         else if (sessioncode === '3333'){        
             res.send(({
             Status: "0",
-            SlotNo: "20",
+            SlotNo: "33",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
         else if (sessioncode === '4444'){        
             res.send(({
             Status: "0",
-            SlotNo: "25",
+            SlotNo: "43",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
