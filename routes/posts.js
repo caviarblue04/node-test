@@ -43,19 +43,37 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode === '5252'){        
+        if (sessioncode === '0101'){        
                 res.send(({
                 Status: "0",
-                SlotNo: "25",
+                SlotNo: "8",
                 ProductID: productid,
                 TradeNo: tradeno,
                 Err:'Success'
                 }))
         }
-        else if (sessioncode === '1234'){        
+        else if (sessioncode === '0202'){        
             res.send(({
             Status: "0",
-            SlotNo: "18",
+            SlotNo: "16",
+            ProductID: productid,
+            TradeNo: tradeno,
+            Err:'Success'
+            }))
+        }
+        else if (sessioncode === '0303'){        
+            res.send(({
+            Status: "0",
+            SlotNo: "24",
+            ProductID: productid,
+            TradeNo: tradeno,
+            Err:'Success'
+            }))
+        }
+        else if (sessioncode === '0404'){        
+            res.send(({
+            Status: "0",
+            SlotNo: "30",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
