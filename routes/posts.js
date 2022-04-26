@@ -3,6 +3,7 @@ const express = require('express');
 const { json } = require('express/lib/response');
 const router = express.Router();
 const Post = require('../models/post');
+var OpenCode = '1';
 
 router.post('/', async (req, res) => {
     //console.log(req.query.MachineID);
@@ -42,19 +43,19 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode = "1212"){        
+        if (sessioncode === '5252'){        
                 res.send(({
                 Status: "0",
-                SlotNo: "12",
+                SlotNo: "25",
                 ProductID: productid,
                 TradeNo: tradeno,
                 Err:'Success'
                 }))
         }
-        else if (sessioncode = "1213"){        
+        else if (sessioncode === '1234'){        
             res.send(({
             Status: "0",
-            SlotNo: "13",
+            SlotNo: "18",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
@@ -63,7 +64,7 @@ router.post('/', async (req, res) => {
 
     }
 
-    else if (funcode === "4000"){
+    else if (funcode === '4000'){
         //Funcode 4000 is ping receive from the machine to change/not change product
         if(MsgType === '0'){
             //MsgType 0 = No changes made to the machine
@@ -130,7 +131,14 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    res.send('Post Page')
+    const max = 9999
+    const min= 1000
+    const result = Math.random()*(max - min) + min
+    const randomslot = [1,1,3,4,5,6].random()
+    OpenCode = result;
+    res.send(
+        console.log(Math.floor(`CODE : ${result}, SLOT : ${randomslot}` ))
+    )
 })
 
 

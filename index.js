@@ -18,6 +18,7 @@ app.listen(port, () => {
     console.log(`Port connected ${port}`)
 });
 
+
 //Connect db
 mongoose.connect(
     process.env.DB_connection, 
