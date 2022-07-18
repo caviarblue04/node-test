@@ -2,11 +2,25 @@ const { request } = require('express');
 const express = require('express');
 const { json } = require('express/lib/response');
 const router = express.Router();
+const sql = require('mssql');
+const fb = require('firebase-admin');
+const bodyparser = require ('body-parser');
 const Post = require('../models/post');
 var OpenCode = '1';
+var numberSlot = '';
+router.use(bodyparser.json());
+router.use(bodyparser.urlencoded({extended: true}))
+
+var serviceAccount = require("./vending-maching-db-firebase-adminsdk-2a81o-8726cd2e35.json");
+
+fb.initializeApp({
+    credential: fb.credential.cert(serviceAccount),
+    databaseURL: "https://vending-maching-db-default-rtdb.asia-southeast1.firebasedatabase.app"
+});
 
 router.post('/', async (req, res) => {
-    //console.log(req.query.MachineID);
+  
+    console.log(req.body);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
     var tradeno = req.body.TradeNo;
@@ -26,6 +40,7 @@ router.post('/', async (req, res) => {
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
     var MsgType = "0";
+    var chosenslot = "5";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
@@ -43,57 +58,74 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode === '1111'){        
+        const sql = require('mssql');
+        const config  = {
+            user: 'user_js',
+            password: 'abc123',
+            database: 'vending machine database',
+            server: 'JOHANES-ASUS\\SQLEXPRESS',
+            options: {
+                trustedConnection: true,
+                trustServerCertificate: true,
+            },
+        };
+
+        console.log(keynum)
+        var inputnumber = sessioncode
+  
+        function getKeyNumber() {
+        var dbConn = new sql.ConnectionPool(config);
+            dbConn.connect().then(function() {
+                var request = new sql.Request(dbConn);
+        
+            request.query(`SELECT SlotNo FROM Slot WHERE KeyNum = ${inputnumber}`).then(function (data){
+                console.log(data);
+                var SlotOpen = data.recordset[0].SlotNo;
+                console.log(data.recordset[0].SlotNo);
+                dbConn.close();
                 res.send(({
-                Status: "0",
-                SlotNo: "13",
-                ProductID: productid,
-                TradeNo: tradeno,
-                Err:'Success'
-                }))
+                    Status: "0",
+                    SlotNo: SlotOpen,
+                    ProductID: productid,
+                    TradeNo: tradeno,
+                    Err:'Success'
+                    }))
+            }).catch(function (err){
+                res.send(({
+                    Status: "1",
+                    SlotNo: "",
+                    ProductID: "",
+                    TradeNo: tradeno,
+                    Err:'Invalid Code'
+                    }))
+                console.log(err);
+                dbConn.close();
+            });
+        }).catch(function (err) {
+            console.log(err);
+        })
         }
-        else if (sessioncode === '2222'){        
-            res.send(({
-            Status: "0",
-            SlotNo: "23",
-            ProductID: productid,
-            TradeNo: tradeno,
-            Err:'Success'
-            }))
-        }
-        else if (sessioncode === '3333'){        
-            res.send(({
-            Status: "0",
-            SlotNo: "33",
-            ProductID: productid,
-            TradeNo: tradeno,
-            Err:'Success'
-            }))
-        }
-        else if (sessioncode === '4444'){        
-            res.send(({
-            Status: "0",
-            SlotNo: "43",
-            ProductID: productid,
-            TradeNo: tradeno,
-            Err:'Success'
-            }))
-        }
-
+        getKeyNumber();    
     }
-
     else if (funcode === '4000'){
         //Funcode 4000 is ping receive from the machine to change/not change product
         if(MsgType === '0'){
+            //Take Database
+            fb.database().ref("Slot/").once("value", function(snapshot){
+                console.log(`Slot No : ${snapshot}`)
+                res.send(({
+                    Status: "0",
+                    MsgType: "0",
+                    TradeNo: tradeno,
+                    SlotNo: snapshot,
+                    ProductID: productid,
+                    Err:'Success'
+                }))
+            })
+            .catch(error => {
+                res.json({ message: error });
+            })
             //MsgType 0 = No changes made to the machine
-            res.send(({
-                Status: "0",
-                MsgType: "0",
-                TradeNo: tradeno,
-                SlotNo: slotno,
-                ProductID: productid,
-                Err:'Success'
-            }))
         }
         else if(MsgType === '1'){
             //MsgType 1 = change product setting in the machine
@@ -148,17 +180,72 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    const max = 9999
-    const min= 1000
-    const result = Math.random()*(max - min) + min
-    const randomslot = [1,1,3,4,5,6].random()
-    OpenCode = result;
-    res.send(
-        console.log(Math.floor(`CODE : ${result}, SLOT : ${randomslot}` ))
-    )
+
+router.post('/testingurl', function (req, res) {
+    console.log(req.body.FunCode);
 })
 
+router.get('/', async (req, res) => {
+
+
+    const array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
+
+    for (let i=0; i < array.length; i++) {
+        const max = 99999
+        const min= 10000
+        const result = Math.random()*(max - min) + min
+        OpenCode = Math.floor(result);
+    
+    
+        function getRandomItem(arr){
+            const randomIndex = Math.floor(Math.random()* arr.length);
+            const item = arr[randomIndex];
+            return item;
+        }
+        res.send(
+        console.log({
+            Code: OpenCode, 
+            SlotNo: array[i]})
+        )
+    }
+})
+
+router.get('/firebase', (req, res) => {
+    console.log('Test');
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var serviceAccount = require("./vending-maching-db-firebase-adminsdk-2a81o-8726cd2e35.json");
+
+        fb.initializeApp({
+            credential: fb.credential.cert(serviceAccount),
+            databaseURL: "https://vending-maching-db-default-rtdb.asia-southeast1.firebasedatabase.app"
+        });
+      
+        //Take Database
+        fb.database().ref("Slot/").once("value", function(snapshot){
+            res.json(snapshot);
+        })
+        .catch(error => {
+            res.json({ message: error });
+        })
+    
+});
+
+router.post('/firebase', (req, res) => {
+    console.log('Test');
+    var Slotdb = parseInt(req.body.DbSlotNo)
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        //Take Database
+        var firebaseDb = fb.database();
+
+        firebaseDb.ref("Slot/").set(Slotdb)
+        res.send(`Slot No: ${Slotdb}`)
+        .catch(error => {
+            res.json({ message: error });
+        })
+    
+});
 
 router.get('/all-data', (req, res) => {
     Post.find()

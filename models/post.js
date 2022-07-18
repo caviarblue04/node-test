@@ -2,64 +2,20 @@ const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema ({
-    FunCode: {
-        type: String,
-        default: "1000"
-    },
-    MachineID: {
+    randCode: {
         type: String,
         require: true
     },
-    TradeNo: {
+    numSlot: {
         type: String,
         require: true
     },
-    SlotNo: {
+    Usability: {
         type: String,
-        require: true
-    },
-    KeyNum: {
-        type: Number,
-        require: true
-    },
-    Status: {
-        type: Number,
-        default : "0"
-    },
-    Quantity: {
-        type: Number,
-        require: true
-    },
-    Stock: {
-        type: Number,
-        require: true
-    },
-    Capacity: {
-        type: String,
-        require: true
-    },
-    ProductID: {
-        type: String,
-        require: true
-    },
-    Price: {
-        type: String,
-        require: true
-    },
-    Type: {
-        type: String,
-        require: true
-    },
-    Introduction: {
-        type: String,
-        require: true
-    },
-    Name: {
-        type: String,
-        require
+        require: true,
+        default: "0"
     }
-
 } , {timestamps: true});
 
-const Post = mongoose.model('Test1000', postSchema)
+const Post = mongoose.model('codeGeneration', postSchema)
 module.exports = Post;

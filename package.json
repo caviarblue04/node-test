@@ -11,13 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "firebase": "^9.9.0",
+    "firebase-admin": "^10.3.0",
     "mongoose": "^6.2.9",
+    "msnodesqlv8": "^2.5.0",
+    "mssql": "^8.1.2",
     "nodemon": "^2.0.15"
   },
-  "engines" : { 
-    "npm" : ">=7.0.0",
-    "node" : ">=16.0.0"
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
   }
 }

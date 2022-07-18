@@ -1,39 +1,28 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
-const port = process.env.port || 3000; 
-require ('dotenv/config');
 
 //Import Routes
 const postsRoutes = require('./routes/posts');
+const codeRoutes = require('./routes/code');
+const firebaseRoutes = require('./routes/firebase');
 
 //Middleware
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true}))
+app.use(bodyparser.urlencoded({extended: true}))
 app.use( '/posts', postsRoutes);
+app.use( '/code', codeRoutes);
+app.use( '/firebase', firebaseRoutes);
 app.use(express.json);
 
-app.listen(port, () => {
-    console.log(`Port connected ${port}`)
-});
-
-
-//Connect db
-mongoose.connect(
-    process.env.DB_connection, 
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }
-);
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
-  console.log("Connected successfully");
-});
-
-app.get('/', (req, res) => {
+app.get('/', function (req, res) {
     res.send('Testing Homepage');
+});
+
+app.post('/', function (req, res) {
+    res.send(req.body.FunCode);
+});
+
+app.listen(8000, () => {
+    console.log(`Port connected`)
 });
