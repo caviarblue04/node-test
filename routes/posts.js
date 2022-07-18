@@ -21,7 +21,7 @@ fb.initializeApp({
 
 router.post('/', async (req, res) => {
   
-    console.log(req.body);
+    //console.log(req.body);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
     var tradeno = req.body.TradeNo;
@@ -40,8 +40,6 @@ router.post('/', async (req, res) => {
     var account = req.body.Account;
     var pwd = req.body.PWD;
     var imageurl = req.body.ImageUrl;
-    var MsgType = "0";
-    var chosenslot = "5";
     var post = new Array({
         funcode, machineid, tradeno, slotno, keynum, status, quantity, stock, capacity, productid, price, type, introduction, name, pwd, account, sessioncode, imageurl
     });
@@ -109,46 +107,63 @@ router.post('/', async (req, res) => {
         getKeyNumber();    
     }
     else if (funcode === '4000'){
-        //Funcode 4000 is ping receive from the machine to change/not change product
-        if(MsgType === '0'){
-            //Take Database
-            fb.database().ref("Slot/").once("value", function(snapshot){
-                console.log(`Slot No : ${snapshot}`)
-                res.send(({
+        fb.database().ref('MsgType/').once('value',   function(snapshot) {
+            var childData = snapshot.val();
+            var MsgType = childData;
+            console.log(MsgType)
+            if(MsgType === 0){
+                //Take Database
+                var firebaseDb = fb.database();
+                firebaseDb.ref("Slot/").once("value", function(snapshot){
+                    console.log(`Slot No : ${snapshot}`)
+                    firebaseDb.ref("MsgType/").set(parseInt("2"))
+                    res.send(({
+                        Status: "0",
+                        MsgType: "0",
+                        TradeNo: tradeno,
+                        SlotNo: snapshot,
+                        ProductID: productid,
+                        Err:'Success'
+                    }))
+                })
+                .catch(error => {
+                    res.json({ message: error });
+                })
+                //MsgType 0 = No changes made to the machine
+            }
+            else if(MsgType === 1){
+                //MsgType 1 = change product setting in the machine
+                //All var should be filled out, else the machine wont make it.
+                res.send({
                     Status: "0",
-                    MsgType: "0",
-                    TradeNo: tradeno,
-                    SlotNo: snapshot,
-                    ProductID: productid,
-                    Err:'Success'
-                }))
-            })
-            .catch(error => {
-                res.json({ message: error });
-            })
-            //MsgType 0 = No changes made to the machine
-        }
-        else if(MsgType === '1'){
-            //MsgType 1 = change product setting in the machine
-            //All var should be filled out, else the machine wont make it.
-            res.send(({
-                Status: "0",
-                MsgType: "1",
-                SlotNo: "19",
-                TradeNo: "00000000001",
-                Capacity: "20",
-                Quanitity: "20",
-                ProductID: "15142",
-                Name: "Cat",
-                Price: "25",
-                Type: "animal",
-                Introduction: "introduction of product",
-                //Picture link should be in PNG format else the machine wont receive
-                ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png", 
-                ImageDetailUrl: "Cat",
-                Err: "Success"
-            })) 
-        }
+                    MsgType: "1",
+                    SlotNo: "19",
+                    TradeNo: "00000000001",
+                    Capacity: "20",
+                    Quanitity: "20",
+                    ProductID: "15142",
+                    Name: "Cat",
+                    Price: "25",
+                    Type: "animal",
+                    Introduction: "introduction of product",
+                    //Picture link should be in PNG format else the machine wont receive
+                    ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png", 
+                    ImageDetailUrl: "Cat",
+                    Err: "Success"
+                }) 
+            }
+            else{
+                //MsgType 1 = change product setting in the machine
+                //All var should be filled out, else the machine wont make it.
+                res.send({
+                    Status: "0",
+                    MsgType: "2",
+                    Err: "Backend issue, please check server/database"
+                }) 
+            }
+        });
+        //Funcode 4000 is ping receive from the machine to change/not change product
+        
     }
 
     else if (funcode === '5000'){
@@ -204,13 +219,15 @@ router.get('/firebase', (req, res) => {
 router.post('/firebase', (req, res) => {
     console.log('Post Firebase');
     var Slotdb = parseInt(req.body.DbSlotNo)
+    var MsgType = parseInt(req.body.MsgType)
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         //Take Database
         var firebaseDb = fb.database();
 
         firebaseDb.ref("Slot/").set(Slotdb)
-        res.send(`Slot No: ${Slotdb}`)
+        firebaseDb.ref("MsgType/").set(MsgType)
+        res.send(`Slot No: ${Slotdb} -- MsgType : ${MsgType}`)
         .catch(error => {
             res.json({ message: error });
         })
