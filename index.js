@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
-const port = process.env.PORT || 8080;
+const port = process.env.port || 8080;
 
 //Import Routes
 const postsRoutes = require('./routes/posts');
