@@ -214,13 +214,7 @@ router.get('/firebase', (req, res) => {
     console.log('Test');
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var serviceAccount = require("./vending-maching-db-firebase-adminsdk-2a81o-8726cd2e35.json");
 
-        fb.initializeApp({
-            credential: fb.credential.cert(serviceAccount),
-            databaseURL: "https://vending-maching-db-default-rtdb.asia-southeast1.firebasedatabase.app"
-        });
-      
         //Take Database
         fb.database().ref("Slot/").once("value", function(snapshot){
             res.json(snapshot);
