@@ -23,6 +23,6 @@ app.post('/', function (req, res) {
     res.send(req.body.FunCode);
 });
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Port connected`)
 });
