@@ -6,6 +6,7 @@ const sql = require('mssql');
 const fb = require('firebase-admin');
 const bodyparser = require ('body-parser');
 const Post = require('../models/post');
+const path = require('path')
 var OpenCode = '1';
 var numberSlot = '';
 router.use(bodyparser.json());
@@ -181,33 +182,8 @@ router.post('/', async (req, res) => {
 });
 
 
-router.post('/testingurl', function (req, res) {
-    console.log(req.body.FunCode);
-})
-
 router.get('/', async (req, res) => {
-
-
-    const array = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
-
-    for (let i=0; i < array.length; i++) {
-        const max = 99999
-        const min= 10000
-        const result = Math.random()*(max - min) + min
-        OpenCode = Math.floor(result);
-    
-    
-        function getRandomItem(arr){
-            const randomIndex = Math.floor(Math.random()* arr.length);
-            const item = arr[randomIndex];
-            return item;
-        }
-        res.send(
-        console.log({
-            Code: OpenCode, 
-            SlotNo: array[i]})
-        )
-    }
+    res.sendFile(path.join(__dirname, '/main.html'));
 })
 
 router.get('/firebase', (req, res) => {

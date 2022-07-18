@@ -17,7 +17,7 @@ app.use( '/firebase', firebaseRoutes);
 app.use(express.json);
 
 app.get('/', function (req, res) {
-    res.send('Testing Homepage');
+    res.sendFile(path.join(__dirname, '/routes/main.html'));
 });
 
 app.post('/', function (req, res) {
