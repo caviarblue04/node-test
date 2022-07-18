@@ -16,7 +16,6 @@
     "express": "^4.17.3",
     "firebase": "^9.9.0",
     "mongoose": "^6.2.9",
-    "msnodesqlv8": "^2.5.0",
     "mssql": "^8.1.2",
     "nodemon": "^2.0.15"
   },
