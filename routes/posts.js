@@ -211,7 +211,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/firebase', (req, res) => {
-    console.log('Test');
+    console.log('Get Firebase');
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
@@ -226,7 +226,7 @@ router.get('/firebase', (req, res) => {
 });
 
 router.post('/firebase', (req, res) => {
-    console.log('Test');
+    console.log('Post Firebase');
     var Slotdb = parseInt(req.body.DbSlotNo)
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional

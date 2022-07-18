@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
+const port = process.env.PORT || 8080;
 
 //Import Routes
 const postsRoutes = require('./routes/posts');
@@ -23,6 +24,6 @@ app.post('/', function (req, res) {
     res.send(req.body.FunCode);
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Port connected`)
+app.listen(port, () => {
+    console.log(`Port connected `+ port)
 });
