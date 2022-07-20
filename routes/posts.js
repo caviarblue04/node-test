@@ -67,7 +67,76 @@ router.post('/', async (req, res) => {
             }))
     }
     }
+    else if (funcode === '4000'){
+        fb.database().ref('MsgType/').once('value',   function(snapshot) {
+            var childData = snapshot.val();
+            var MsgType = childData;
+            console.log(MsgType)
+            if(MsgType === 0){
+                //Take Database
+                var firebaseDb = fb.database();
+                firebaseDb.ref("Slot/").once("value", function(snapshot){
+                    console.log(`Slot No : ${snapshot}`)
+                    var slotno = toString(snapshot);
+                    firebaseDb.ref("MsgType/").set(parseInt("2"))
+                    res.send(({
+                        Status: "0",
+                        MsgType: "0",
+                        TradeNo: tradeno,
+                        SlotNo: slotno,
+                        ProductID: productid,
+                        Err:'Success'
+                    }))
+                })
+                .catch(error => {
+                    res.json({ message: error });
+                })
+                //MsgType 0 = No changes made to the machine
+            }
+            else if(MsgType === 1){
+                //MsgType 1 = change product setting in the machine
+                //All var should be filled out, else the machine wont make it.
+                res.send({
+                    Status: "0",
+                    MsgType: "1",
+                    SlotNo: "19",
+                    TradeNo: "00000000001",
+                    Capacity: "20",
+                    Quanitity: "20",
+                    ProductID: "15142",
+                    Name: "Cat",
+                    Price: "25",
+                    Type: "animal",
+                    Introduction: "introduction of product",
+                    //Picture link should be in PNG format else the machine wont receive
+                    ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png", 
+                    ImageDetailUrl: "Cat",
+                    Err: "Success"
+                }) 
+            }
+            else{
+                //MsgType 1 = change product setting in the machine
+                //All var should be filled out, else the machine wont make it.
+                res.send({
+                    Status: "0",
+                    MsgType: "2",
+                    Err: "Backend issue, please check server/database"
+                }) 
+            }
+        });
+        //Funcode 4000 is ping receive from the machine to change/not change product
+        
+    }
 
+    else if (funcode === '5000'){
+        //No 
+        res.send(({
+            Status: "0",
+            SlotNo: slotno,
+            TradeNo: tradeno,
+            Err:'Success'
+        }))
+    }
     else if (funcode === '5001'){
         //Funcode 5001 to confirm the changes in the machine (?)
         res.send(({
