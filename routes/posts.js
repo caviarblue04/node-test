@@ -118,7 +118,7 @@ router.post('/', async (req, res) => {
                 //MsgType 1 = change product setting in the machine
                 //All var should be filled out, else the machine wont make it.
                 res.send({
-                    Status: "0",
+                    Status: "1",
                     MsgType: "2",
                     Err: "Backend issue, please check server/database"
                 }) 
