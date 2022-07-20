@@ -57,124 +57,15 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        const sql = require('mssql');
-        const config  = {
-            user: 'user_js',
-            password: 'abc123',
-            database: 'vending machine database',
-            server: 'JOHANES-ASUS\\SQLEXPRESS',
-            options: {
-                trustedConnection: true,
-                trustServerCertificate: true,
-            },
-        };
-
-        console.log(keynum)
-        var inputnumber = sessioncode
-  
-        function getKeyNumber() {
-        var dbConn = new sql.ConnectionPool(config);
-            dbConn.connect().then(function() {
-                var request = new sql.Request(dbConn);
-        
-            request.query(`SELECT SlotNo FROM Slot WHERE KeyNum = ${inputnumber}`).then(function (data){
-                console.log(data);
-                var SlotOpen = data.recordset[0].SlotNo;
-                console.log(data.recordset[0].SlotNo);
-                dbConn.close();
-                res.send(({
-                    Status: "0",
-                    SlotNo: SlotOpen,
-                    ProductID: productid,
-                    TradeNo: tradeno,
-                    Err:'Success'
-                    }))
-            }).catch(function (err){
-                res.send(({
-                    Status: "1",
-                    SlotNo: "",
-                    ProductID: "",
-                    TradeNo: tradeno,
-                    Err:'Invalid Code'
-                    }))
-                console.log(err);
-                dbConn.close();
-            });
-        }).catch(function (err) {
-            console.log(err);
-        })
-        }
-        getKeyNumber();    
-    }
-    else if (funcode === '4000'){
-        fb.database().ref('MsgType/').once('value',   function(snapshot) {
-            var childData = snapshot.val();
-            var MsgType = childData;
-            console.log(MsgType)
-            if(MsgType === 0){
-                //Take Database
-                var firebaseDb = fb.database();
-                firebaseDb.ref("Slot/").once("value", function(snapshot){
-                    console.log(`Slot No : ${snapshot}`)
-                    var slotno = toString(snapshot);
-                    firebaseDb.ref("MsgType/").set(parseInt("2"))
-                    res.send(({
-                        Status: "0",
-                        MsgType: "0",
-                        TradeNo: tradeno,
-                        SlotNo: slotno,
-                        ProductID: productid,
-                        Err:'Success'
-                    }))
-                })
-                .catch(error => {
-                    res.json({ message: error });
-                })
-                //MsgType 0 = No changes made to the machine
-            }
-            else if(MsgType === 1){
-                //MsgType 1 = change product setting in the machine
-                //All var should be filled out, else the machine wont make it.
-                res.send({
-                    Status: "0",
-                    MsgType: "1",
-                    SlotNo: "19",
-                    TradeNo: "00000000001",
-                    Capacity: "20",
-                    Quanitity: "20",
-                    ProductID: "15142",
-                    Name: "Cat",
-                    Price: "25",
-                    Type: "animal",
-                    Introduction: "introduction of product",
-                    //Picture link should be in PNG format else the machine wont receive
-                    ImageUrl: "https://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat-Free-Download-PNG.png", 
-                    ImageDetailUrl: "Cat",
-                    Err: "Success"
-                }) 
-            }
-            else{
-                //MsgType 1 = change product setting in the machine
-                //All var should be filled out, else the machine wont make it.
-                res.send({
-                    Status: "0",
-                    MsgType: "2",
-                    Err: "Backend issue, please check server/database"
-                }) 
-            }
-        });
-        //Funcode 4000 is ping receive from the machine to change/not change product
-        
-    }
-
-    else if (funcode === '5000'){
-        //No 
-        res.send(({
+        if (sessioncode === '1111'){        
+            res.send(({
             Status: "0",
-            SlotNo: slotno,
+            SlotNo: "13",
+            ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
-        }))
+            }))
+    }
     }
 
     else if (funcode === '5001'){
