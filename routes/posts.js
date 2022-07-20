@@ -241,4 +241,9 @@ router.get('/all-data', (req, res) => {
     })
 })
 
+router.get('/test-data', (req, res) => {
+        res.send("test-data");
+        console.log("test-data")
+})
+
 module.exports = router; 
