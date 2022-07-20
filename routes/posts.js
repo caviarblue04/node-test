@@ -116,12 +116,13 @@ router.post('/', async (req, res) => {
                 var firebaseDb = fb.database();
                 firebaseDb.ref("Slot/").once("value", function(snapshot){
                     console.log(`Slot No : ${snapshot}`)
+                    var slotno = toString(snapshot);
                     firebaseDb.ref("MsgType/").set(parseInt("2"))
                     res.send(({
                         Status: "0",
                         MsgType: "0",
                         TradeNo: tradeno,
-                        SlotNo: snapshot,
+                        SlotNo: slotno,
                         ProductID: productid,
                         Err:'Success'
                     }))
