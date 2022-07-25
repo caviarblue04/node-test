@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
         if (sessioncode === '1111'){        
             res.send(({
             Status: "0",
-            SlotNo: "13",
+            SlotNo: "101",
             ProductID: productid,
             TradeNo: tradeno,
             Err:'Success'
@@ -190,9 +190,7 @@ router.post('/firebase', (req, res) => {
         firebaseDb.ref("Slot/").set(Slotdb)
         firebaseDb.ref("MsgType/").set(MsgType)
         res.send(`Slot No: ${Slotdb} -- MsgType : ${MsgType}`)
-        .catch(error => {
-            res.json({ message: error });
-        })
+        console.log(`Slot No: ${Slotdb} -- MsgType : ${MsgType}`)
     
 });
 
