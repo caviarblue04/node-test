@@ -107,12 +107,20 @@ router.post('/', async (req, res) => {
                     var slotnostr = slotno.toString();
                     console.log(`Slot No : ${slotno}`)
                     firebaseDb.ref("MsgType/").set(parseInt("2"))
+                    console.log(({
+                        Status: "0",
+                        MsgType: "0",
+                        TradeNo: tradeno,
+                        SlotNo: slotnostr,
+                        ProductID: slotnostr,
+                        Err:'Success'
+                    }))
                     res.send(({
                         Status: "0",
                         MsgType: "0",
                         TradeNo: tradeno,
                         SlotNo: slotnostr,
-                        ProductID: productid,
+                        ProductID: slotnostr,
                         Err:'Success'
                     }))
                 })
