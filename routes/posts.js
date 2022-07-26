@@ -20,7 +20,7 @@ fb.initializeApp({
 });
 
 router.post('/', async (req, res) => {
-  
+    //SlotNo var match with the machine slot no
     //console.log(req.body);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
@@ -106,7 +106,7 @@ router.post('/', async (req, res) => {
                     var slotno = snapshot.val();
                     var slotnostr = slotno.toString();
                     console.log(`Slot No : ${slotno}`)
-                    //firebaseDb.ref("MsgType/").set(parseInt("2"))
+                    firebaseDb.ref("MsgType/").set(parseInt("2"))
                     res.send(({
                         Status: "0",
                         MsgType: "0",
