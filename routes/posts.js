@@ -106,7 +106,7 @@ router.post('/', async (req, res) => {
                     var slotno = snapshot.val();
                     var slotnostr = slotno.toString();
                     console.log(`Slot No : ${slotno}`)
-                    firebaseDb.ref("MsgType/").set(parseInt("2"))
+                    //firebaseDb.ref("MsgType/").set(parseInt("2"))
                     res.send(({
                         Status: "0",
                         MsgType: "0",
