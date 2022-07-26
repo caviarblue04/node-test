@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
                     console.log(({
                         Status: "0",
                         MsgType: "0",
-                        TradeNo: tradeno,
+                        TradeNo: '1',
                         SlotNo: slotnostr,
                         ProductID: slotnostr,
                         Err:'Success'
