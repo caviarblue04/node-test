@@ -57,16 +57,43 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '2000'){
-        if (sessioncode === '1111'){        
-            res.send(({
-            Status: "0",
-            SlotNo: "101",
-            ProductID: productid,
-            TradeNo: tradeno,
-            Err:'Success'
-            }))
+        fb.database().ref('PinCode/').once('value',   function(snapshot) {
+            var childData = snapshot.val();
+            var a = childData;
+            var pincodeMachine = a.toString();
+            console.log(pincodeMachine);
+            console.log(sessioncode);
+            if(sessioncode === pincodeMachine){
+                //Take Database
+                var firebaseDb = fb.database();
+                firebaseDb.ref("Slot-Open/").once("value", function(snapshot){
+                    var slotno = snapshot.val();
+                    var slotnostr = slotno.toString();
+                    console.log(`Slot No : ${slotno}`)
+                    res.send(({
+                        Status: "0",
+                        MsgType: "0",
+                        TradeNo: tradeno,
+                        SlotNo: slotnostr,
+                        ProductID: productid,
+                        Err:'Success'
+                    }))
+                })
+                .catch(error => {
+                    res.json({ message: error });
+                })
+            }
+            else{
+                res.send({
+                    Status: "1",
+                    Err: "Server issue, please check server/database"
+                }) 
+            }
+        });
+        //Funcode 4000 is ping receive from the machine to change/not change product
+        
     }
-    }
+
     else if (funcode === '4000'){
         fb.database().ref('MsgType/').once('value',   function(snapshot) {
             var childData = snapshot.val();
@@ -121,7 +148,7 @@ router.post('/', async (req, res) => {
                 res.send({
                     Status: "1",
                     MsgType: "2",
-                    Err: "Backend issue, please check server/database"
+                    Err: "Server issue, please check server/database"
                 }) 
             }
         });
@@ -191,6 +218,22 @@ router.post('/firebase', (req, res) => {
         firebaseDb.ref("MsgType/").set(MsgType)
         res.send(`Slot No: ${Slotdb} -- MsgType : ${MsgType}`)
         console.log(`Slot No: ${Slotdb} -- MsgType : ${MsgType}`)
+    
+});
+
+router.post('/openpin', (req, res) => {
+    console.log('Post Firebase');
+    var SlotNoPin = parseInt(req.body.SlotNoOpen)
+    var PincodeSlot = parseInt(req.body.PincodeSlot)
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        //Take Database
+        var firebaseDb = fb.database();
+
+        firebaseDb.ref("Slot-Open/").set(SlotNoPin)
+        firebaseDb.ref("PinCode/").set(PincodeSlot)
+        res.send(`Open Slot: ${SlotNoPin} -- Pincode : ${PincodeSlot}`)
+        console.log(`Open Slot: ${SlotNoPin} -- Pincode : ${PincodeSlot}`)
     
 });
 
