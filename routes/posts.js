@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
                     console.log(({
                         Status: "0",
                         MsgType: "0",
-                        TradeNo: '20170609123523569',
+                        TradeNo: '20170609123523561',
                         SlotNo: slotnostr,
                         ProductID: slotnostr,
                         Err:'Success'
@@ -118,7 +118,7 @@ router.post('/', async (req, res) => {
                     res.send(({
                         Status: "0",
                         MsgType: "0",
-                        TradeNo: '20170609123523569',
+                        TradeNo: '20170609123523561',
                         SlotNo: slotnostr,
                         ProductID: slotnostr,
                         Err:'Success'
