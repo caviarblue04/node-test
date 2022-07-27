@@ -9,8 +9,8 @@ var numberSlot = '';
 
 
 router.get('/', async (req, res) => {
-    const max = 9999
-    const min = 1000
+    const max = 99999999999999999
+    const min = 10000000000000000
     const result = Math.random() * (max - min) + min
     OpenCode = Math.floor(result);
 
@@ -30,13 +30,14 @@ router.get('/', async (req, res) => {
         numSlot: numberSlot
     });
 
-    post.save()
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            res.json({ message: err });
-        })
+    console.log({
+        randCode: OpenCode,
+        numSlot: numberSlot
+    });
+    res.send({
+        randCode: OpenCode,
+        numSlot: numberSlot
+    });
 
 })
 

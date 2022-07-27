@@ -20,11 +20,16 @@ fb.initializeApp({
 });
 
 router.post('/', async (req, res) => {
+    const max = 99999999999999999
+    const min = 10000000000000000
+    const result = Math.random() * (max - min) + min
+    resultnumber = Math.floor(result);
+
     //SlotNo var match with the machine slot no
     //console.log(req.body);
     var funcode = req.body.FunCode;
     var machineid = req.body.MachineID;
-    var tradeno = req.body.TradeNo;
+    var tradeno = resultnumber.toString();
     var slotno = req.body.SlotNo;
     var keynum = req.body.KeyNum;
     var status = "0";
@@ -61,8 +66,8 @@ router.post('/', async (req, res) => {
             var childData = snapshot.val();
             var a = childData;
             var pincodeMachine = a.toString();
-            console.log(pincodeMachine);
-            console.log(sessioncode);
+            console.log(`Database pincode -> ${pincodeMachine}`);
+            console.log(`Machine pincode -> ${sessioncode}`);
             if(sessioncode === pincodeMachine){
                 //Take Database
                 var firebaseDb = fb.database();
@@ -70,14 +75,14 @@ router.post('/', async (req, res) => {
                     var slotno = snapshot.val();
                     var slotnostr = slotno.toString();
                     console.log(`Slot No : ${slotno}`)
-                    res.send(({
+                    res.send({
                         Status: "0",
                         MsgType: "0",
                         TradeNo: tradeno,
                         SlotNo: slotnostr,
                         ProductID: productid,
                         Err:'Success'
-                    }))
+                    })
                 })
                 .catch(error => {
                     res.json({ message: error });
@@ -86,7 +91,7 @@ router.post('/', async (req, res) => {
             else{
                 res.send({
                     Status: "1",
-                    Err: "Server issue, please check server/database"
+                    Err: "Pincode wrong!"
                 }) 
             }
         });
@@ -95,7 +100,7 @@ router.post('/', async (req, res) => {
     }
 
     else if (funcode === '4000'){
-        fb.database().ref('MsgType/').once('value',   function(snapshot) {
+        fb.database().ref('MsgType/').once('value', function(snapshot) {
             var childData = snapshot.val();
             var MsgType = childData;
             console.log(MsgType)
@@ -110,7 +115,7 @@ router.post('/', async (req, res) => {
                     console.log(({
                         Status: "0",
                         MsgType: "0",
-                        TradeNo: '12459875412365478',
+                        TradeNo: tradeno,
                         SlotNo: slotnostr,
                         ProductID: slotnostr,
                         Err:'Success'
@@ -118,7 +123,7 @@ router.post('/', async (req, res) => {
                     res.send(({
                         Status: "0",
                         MsgType: "0",
-                        TradeNo: '12459875412365478',
+                        TradeNo: tradeno,
                         SlotNo: slotnostr,
                         ProductID: slotnostr,
                         Err:'Success'
